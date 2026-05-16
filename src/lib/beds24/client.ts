@@ -1,9 +1,6 @@
 const BEDS24_BASE_URL = 'https://beds24.com/api/v2'
 
-export async function beds24Fetch(path: string, options?: RequestInit) {
-  const apiKey = process.env.BEDS24_API_KEY
-  if (!apiKey) throw new Error('BEDS24_API_KEY not set')
-
+export async function beds24Fetch(path: string, apiKey: string, options?: RequestInit) {
   const res = await fetch(`${BEDS24_BASE_URL}${path}`, {
     ...options,
     headers: {
@@ -30,14 +27,20 @@ export interface Beds24Booking {
   guestEmail: string
   numAdult: number
   numChild: number
-  firstNight: string  // YYYY-MM-DD
+  firstNight: string
   lastNight: string
   status: string
 }
 
-export async function getBookings(propertyId: string, dateFrom: string, dateTo: string): Promise<Beds24Booking[]> {
+export async function getBookings(
+  propertyId: string,
+  dateFrom: string,
+  dateTo: string,
+  apiKey: string
+): Promise<Beds24Booking[]> {
   const data = await beds24Fetch(
-    `/getbookings?propId=${propertyId}&firstNight=${dateFrom}&lastNight=${dateTo}&includeInvoice=false`
+    `/getbookings?propId=${propertyId}&firstNight=${dateFrom}&lastNight=${dateTo}&includeInvoice=false`,
+    apiKey
   )
   return data.bookings ?? []
 }
