@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "YOKOSO | セルフチェックインシステム",
+  title: "CheckInn | セルフチェックインシステム",
   description: "無人宿泊施設向けセルフチェックインシステム",
 };
 
