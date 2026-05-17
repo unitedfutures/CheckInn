@@ -18,6 +18,14 @@ export async function beds24Fetch(path: string, apiKey: string, options?: Reques
   return res.json()
 }
 
+export interface Beds24Property {
+  propId: string
+  name: string
+  address: string
+  city: string
+  country: string
+}
+
 export interface Beds24Booking {
   bookId: string
   propId: string
@@ -30,6 +38,11 @@ export interface Beds24Booking {
   firstNight: string
   lastNight: string
   status: string
+}
+
+export async function getProperties(apiKey: string): Promise<Beds24Property[]> {
+  const data = await beds24Fetch('/getprops', apiKey)
+  return data.props ?? []
 }
 
 export async function getBookings(

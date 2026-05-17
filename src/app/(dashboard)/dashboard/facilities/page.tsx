@@ -5,6 +5,7 @@ import { Building2, QrCode, RefreshCw } from 'lucide-react'
 import { FacilityForm } from './facility-form'
 import { FacilityQR } from './facility-qr'
 import { Beds24SyncButton } from './beds24-sync-button'
+import { Beds24ImportButton } from './beds24-import-button'
 
 export default async function FacilitiesPage() {
   const supabase = await createClient()
@@ -20,7 +21,10 @@ export default async function FacilitiesPage() {
           <h2 className="text-2xl font-bold text-gray-900">施設管理</h2>
           <p className="text-gray-500 text-sm mt-1">施設の登録・QRコード発行・Beds24連携</p>
         </div>
-        <FacilityForm />
+        <div className="flex items-start gap-3">
+          <Beds24ImportButton />
+          <FacilityForm />
+        </div>
       </div>
 
       {facilities && facilities.length > 0 ? (
@@ -66,7 +70,7 @@ export default async function FacilitiesPage() {
         <div className="text-center py-16 text-gray-400">
           <Building2 size={48} className="mx-auto mb-4 opacity-30" />
           <p className="text-sm">施設が登録されていません</p>
-          <p className="text-xs mt-1">右上の「施設を追加」から登録してください</p>
+          <p className="text-xs mt-1">「Beds24から施設をインポート」または「施設を追加」から登録してください</p>
         </div>
       )}
     </div>
