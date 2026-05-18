@@ -54,8 +54,8 @@ export default async function LandingPage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
-            QRコードひとつで本人確認・顔写真取得・宿泊者名簿への自動記録まで。
-            スタッフ不在でも、旅館業法の要件を100%満たすチェックインを実現します。
+            QRコードひとつで本人確認・宿泊者名簿への自動記録まで。
+            スタッフ不在でも、旅館業法の要件を満たすチェックインを実現します。
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -178,7 +178,7 @@ export default async function LandingPage() {
             {[
               { icon: Smartphone, title: '事前登録フォーム', body: '予約後にメールで案内。氏名・住所・連絡先・パスポート情報（外国人）をスマホで入力。規約同意も電子取得。' },
               { icon: QrCode, title: 'ワンタイムQR照合', body: '宿泊者に発行したQRと施設設置のQRをペアリング照合。本人以外は入室不可の二段階認証を実現。' },
-              { icon: Users, title: '顔写真の自動取得', body: 'チェックイン時にスマホカメラで自撮りを取得・クラウド保存。旅館業法が定める「録画要件」を完全充足。' },
+              { icon: Users, title: '防犯カメラの別途設置を推奨', body: '旅館業法の「顔を判別できる角度での録画」要件は、事業者様が施設に設置する防犯カメラで対応いただきます。CheckInnはその他の本人確認・名簿要件をカバーします。' },
               { icon: FileText, title: '宿泊者名簿の自動生成', body: '入力データから名簿を自動生成。3年間クラウド保存・CSV出力に対応。保健所への提示もすぐに対応可能。' },
               { icon: ShieldCheck, title: '本人確認後に解錠', body: '照合完了後にはじめて暗証番号を発行。RemoteLOCK連携でチェックインと同時にスマートロックを解除。' },
               { icon: Globe, title: '多言語・インバウンド対応', body: '日本語・英語に対応。外国人宿泊者のパスポート番号・国籍・旅券画像も取得・保存できます。' },
@@ -236,14 +236,6 @@ export default async function LandingPage() {
               },
               {
                 step: '04',
-                phase: '顔写真の撮影',
-                title: 'セルフィーを1枚撮影',
-                body: '画面の指示に従い、正面から顔写真を撮影します。これにより旅館業法が定める本人確認記録が完了します。',
-                badge: '当日',
-                badgeColor: 'bg-green-500',
-              },
-              {
-                step: '05',
                 phase: '本人照合',
                 title: 'メールのQRコードをかざす',
                 body: '届いたメールのQRリンクを開くと、システムが自動で予約情報と照合。本人確認が完了します。',
@@ -251,7 +243,7 @@ export default async function LandingPage() {
                 badgeColor: 'bg-green-500',
               },
               {
-                step: '06',
+                step: '05',
                 phase: 'チェックイン完了',
                 title: '暗証番号が表示される',
                 body: '照合完了と同時に暗証番号が画面に表示されます。その番号を入力するだけで入室完了。スタッフ対応は一切不要です。',
@@ -299,7 +291,7 @@ export default async function LandingPage() {
               {[
                 { req: '事前に本人確認情報・事前共有情報を共有', how: '予約後に登録フォームURLを送付。氏名・住所・連絡先を取得し、チェックイン用QR（事前共有情報）を発行' },
                 { req: '施設の自動チェックイン機器等での照合', how: '施設設置QR＋ゲスト保有QRのペアリング照合による本人確認（「等」の解釈に対応）' },
-                { req: '顔を判別できる角度での録画', how: 'チェックイン時にスマホカメラで顔写真を取得・クラウド保存（3年間）' },
+                { req: '顔を判別できる角度での録画', how: '事業者様が施設に設置する防犯カメラで対応（CheckInnは設置の推奨・要件説明をサポート。録画機器は事業者様にてご用意ください）' },
                 { req: '鍵は本人確認後のみ交付', how: '照合完了後にはじめて暗証番号を発行。RemoteLOCK連動で本人確認前の解錠を防止' },
                 { req: '宿泊者名簿の作成・3年間保存', how: '入力データから名簿を自動生成。クラウドDBに3年間保存・CSV出力対応' },
                 { req: '外国人宿泊者の旅券情報取得', how: 'パスポート番号・国籍・旅券画像（JPG/PNG）を取得・暗号化して保存' },
