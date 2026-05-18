@@ -195,6 +195,99 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* ============ COMPARISON ============ */}
+      <section className="py-24 px-6 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-indigo-600 font-bold text-sm tracking-widest mb-3">WHY CHECKINN</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
+              他社システムより、<span className="text-indigo-600">圧倒的に低コスト</span>。
+            </h2>
+            <p className="text-gray-500 max-w-xl mx-auto">
+              タブレット設置型・顔認証型は機器代だけで数十万円〜。
+              CheckInnはゲスト自身のスマホを使うため、施設側の機器投資はほぼゼロです。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+            {/* タブレット設置型 */}
+            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              <div className="bg-gray-100 px-6 py-4 text-center">
+                <p className="text-sm font-bold text-gray-500 tracking-wide">タブレット設置型</p>
+              </div>
+              <div className="px-6 py-6 space-y-4">
+                {[
+                  { label: '初期費用', value: '機器代 数十万円〜', bad: true },
+                  { label: '設置工事', value: '電源・固定工事が必要', bad: true },
+                  { label: 'ゲストの操作', value: '施設設置の端末を操作', bad: false },
+                  { label: '機器の故障リスク', value: '現地機器が壊れると運用停止', bad: true },
+                  { label: '法令対応', value: '照合・名簿対応', bad: false },
+                ].map(({ label, value, bad }) => (
+                  <div key={label} className="flex items-start justify-between gap-3">
+                    <span className="text-xs text-gray-400 shrink-0 mt-0.5">{label}</span>
+                    <span className={`text-xs font-medium text-right ${bad ? 'text-red-500' : 'text-gray-600'}`}>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 顔認証型 */}
+            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              <div className="bg-gray-100 px-6 py-4 text-center">
+                <p className="text-sm font-bold text-gray-500 tracking-wide">顔認証型</p>
+              </div>
+              <div className="px-6 py-6 space-y-4">
+                {[
+                  { label: '初期費用', value: '専用機器 数十万円〜', bad: true },
+                  { label: '設置工事', value: 'カメラ・端末の設置が必要', bad: true },
+                  { label: 'ゲストの操作', value: '専用機器に顔をかざす', bad: false },
+                  { label: '機器の故障リスク', value: '認証機器が壊れると入室不可', bad: true },
+                  { label: '法令対応', value: '録画・照合対応', bad: false },
+                ].map(({ label, value, bad }) => (
+                  <div key={label} className="flex items-start justify-between gap-3">
+                    <span className="text-xs text-gray-400 shrink-0 mt-0.5">{label}</span>
+                    <span className={`text-xs font-medium text-right ${bad ? 'text-red-500' : 'text-gray-600'}`}>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CheckInn */}
+            <div className="bg-indigo-600 rounded-2xl border border-indigo-600 overflow-hidden shadow-xl shadow-indigo-200 ring-2 ring-indigo-400">
+              <div className="bg-indigo-700 px-6 py-4 text-center flex items-center justify-center gap-2">
+                <Star size={14} className="text-yellow-300 fill-yellow-300" />
+                <p className="text-sm font-black text-white tracking-wide">CheckInn（QRコード型）</p>
+                <Star size={14} className="text-yellow-300 fill-yellow-300" />
+              </div>
+              <div className="px-6 py-6 space-y-4">
+                {[
+                  { label: '初期費用', value: '0円（機器不要）' },
+                  { label: '設置', value: 'QRコードを印刷して貼るだけ' },
+                  { label: 'ゲストの操作', value: '自分のスマホで完結' },
+                  { label: '機器の故障リスク', value: 'ゲストのスマホを使うためなし' },
+                  { label: '法令対応', value: '照合・名簿・外国人対応すべて' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex items-start justify-between gap-3">
+                    <span className="text-xs text-indigo-300 shrink-0 mt-0.5">{label}</span>
+                    <span className="text-xs font-bold text-white text-right">{value}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="px-6 pb-6">
+                <div className="bg-indigo-500/50 rounded-xl px-4 py-3 text-center">
+                  <p className="text-white text-xs font-bold">月額費用のみで導入可能</p>
+                  <p className="text-indigo-200 text-xs mt-0.5">印刷代だけで今日から運用開始</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-xs text-gray-400 mt-6">
+            ※他社サービスの費用は各社公開情報をもととした目安です
+          </p>
+        </div>
+      </section>
+
       {/* ============ FLOW ============ */}
       <section className="py-24 px-6 bg-indigo-950" id="flow">
         <div className="max-w-4xl mx-auto">
