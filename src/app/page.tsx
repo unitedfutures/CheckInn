@@ -176,9 +176,8 @@ export default async function LandingPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="features">
             {[
-              { icon: Smartphone, title: '事前登録フォーム', body: '予約後にメールで案内。氏名・住所・連絡先・パスポート情報（外国人）をスマホで入力。規約同意も電子取得。' },
+              { icon: Smartphone, title: '事前登録フォーム', body: 'お客様に宿泊者情報を入力していただくためのURLを発行。氏名・住所・連絡先・パスポート情報（外国人）に加え、顔写真の取得も可能。規約同意も電子取得。' },
               { icon: QrCode, title: 'ワンタイムQR照合', body: '宿泊者に発行したQRと施設設置のQRをペアリング照合。本人以外は入室不可の二段階認証を実現。' },
-              { icon: Users, title: '防犯カメラの別途設置を推奨', body: '旅館業法の「顔を判別できる角度での録画」要件は、事業者様が施設に設置する防犯カメラで対応いただきます。CheckInnはその他の本人確認・名簿要件をカバーします。' },
               { icon: FileText, title: '宿泊者名簿の自動生成', body: '入力データから名簿を自動生成。3年間クラウド保存・CSV出力に対応。保健所への提示もすぐに対応可能。' },
               { icon: ShieldCheck, title: '本人確認後に解錠', body: '照合完了後にはじめて暗証番号を発行。RemoteLOCK連携でチェックインと同時にスマートロックを解除。' },
               { icon: Globe, title: '多言語・インバウンド対応', body: '日本語・英語に対応。外国人宿泊者のパスポート番号・国籍・旅券画像も取得・保存できます。' },
