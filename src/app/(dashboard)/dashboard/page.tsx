@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent } from '@/components/ui/card'
-import { Building2, CalendarDays, Users, CheckCircle } from 'lucide-react'
+import { Building2, CalendarDays, Users, CheckCircle, Settings, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -48,18 +49,42 @@ export default async function DashboardPage() {
         ))}
       </div>
 
+      {/* 初期設定 */}
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 mb-4">
+        <div className="flex items-center gap-2 mb-3">
+          <Settings size={15} className="text-gray-500" />
+          <h3 className="font-semibold text-gray-700 text-sm">初期設定（最初に1度だけ）</h3>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
+          <Link href="/dashboard/facilities" className="bg-white border border-gray-300 rounded-lg px-3 py-1 hover:border-indigo-400 hover:text-indigo-600 transition-colors">
+            施設を登録してQRコードを発行
+          </Link>
+          <span className="text-gray-300">／</span>
+          <Link href="/dashboard/settings" className="bg-white border border-gray-300 rounded-lg px-3 py-1 hover:border-indigo-400 hover:text-indigo-600 transition-colors">
+            Beds24連携を設定（任意）
+          </Link>
+        </div>
+      </div>
+
+      {/* 通常フロー */}
       <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-5">
-        <h3 className="font-semibold text-indigo-900 mb-2">チェックインフロー</h3>
+        <h3 className="font-semibold text-indigo-900 mb-3">通常の運用フロー</h3>
         <div className="flex items-center gap-2 text-sm text-indigo-700 flex-wrap">
-          <span className="bg-white border border-indigo-200 rounded-lg px-3 py-1">① Beds24予約同期</span>
-          <span className="text-indigo-400">→</span>
-          <span className="bg-white border border-indigo-200 rounded-lg px-3 py-1">② 事前チェックインメール送信</span>
-          <span className="text-indigo-400">→</span>
-          <span className="bg-white border border-indigo-200 rounded-lg px-3 py-1">③ 宿泊者情報・規約同意</span>
-          <span className="text-indigo-400">→</span>
-          <span className="bg-white border border-indigo-200 rounded-lg px-3 py-1">④ 現地QR照合・顔写真</span>
-          <span className="text-indigo-400">→</span>
-          <span className="bg-white border border-indigo-200 rounded-lg px-3 py-1">⑤ 暗証番号表示</span>
+          <div className="bg-white border border-indigo-200 rounded-lg px-3 py-1.5">
+            <span className="text-indigo-400 text-xs mr-1">①</span>事前登録URLをゲストに送付
+          </div>
+          <ArrowRight size={14} className="text-indigo-300 shrink-0" />
+          <div className="bg-white border border-indigo-200 rounded-lg px-3 py-1.5">
+            <span className="text-indigo-400 text-xs mr-1">②</span>ゲストが情報・顔写真・パスキーを登録
+          </div>
+          <ArrowRight size={14} className="text-indigo-300 shrink-0" />
+          <div className="bg-white border border-indigo-200 rounded-lg px-3 py-1.5">
+            <span className="text-indigo-400 text-xs mr-1">③</span>当日：QRスキャン → Face ID認証
+          </div>
+          <ArrowRight size={14} className="text-indigo-300 shrink-0" />
+          <div className="bg-white border border-indigo-200 rounded-lg px-3 py-1.5 font-medium text-green-700 border-green-200 bg-green-50">
+            暗証番号を表示して入室
+          </div>
         </div>
       </div>
     </div>
