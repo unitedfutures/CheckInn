@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
-import { Camera, QrCode, CheckCircle, AlertCircle, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { startAuthentication } from '@simplewebauthn/browser'
+import { CheckCircle, AlertCircle, ChevronRight, ShieldCheck, Fingerprint } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface Facility {
@@ -12,91 +13,57 @@ interface Facility {
   emergency_contact: string | null
 }
 
-type Step = 'welcome' | 'face' | 'qr_input' | 'verifying' | 'success' | 'error'
+type Step = 'welcome' | 'passkey' | 'verifying' | 'success' | 'error'
 
 export function CheckinFlow({ facility }: { facility: Facility }) {
   const [step, setStep] = useState<Step>('welcome')
-  const [facePhotoDataUrl, setFacePhotoDataUrl] = useState<string>('')
-  const [guestQrToken, setGuestQrToken] = useState<string>('')
   const [pinCode, setPinCode] = useState<string>('')
   const [errorMsg, setErrorMsg] = useState<string>('')
-  const [cameraActive, setCameraActive] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const streamRef = useRef<MediaStream | null>(null)
 
-  // カメラ起動
-  const startCamera = useCallback(async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
-      })
-      streamRef.current = stream
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream
-        await videoRef.current.play()
-      }
-      setCameraActive(true)
-    } catch {
-      setErrorMsg('カメラへのアクセスが許可されていません。設定を確認してください。')
-      setStep('error')
-    }
-  }, [])
-
-  // カメラ停止
-  const stopCamera = useCallback(() => {
-    streamRef.current?.getTracks().forEach(t => t.stop())
-    streamRef.current = null
-    setCameraActive(false)
-  }, [])
-
-  // 顔写真撮影
-  const capturePhoto = useCallback(() => {
-    if (!videoRef.current || !canvasRef.current) return
-    const video = videoRef.current
-    const canvas = canvasRef.current
-    canvas.width = video.videoWidth
-    canvas.height = video.videoHeight
-    canvas.getContext('2d')?.drawImage(video, 0, 0)
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.85)
-    setFacePhotoDataUrl(dataUrl)
-    stopCamera()
-    setStep('qr_input')
-  }, [stopCamera])
-
-  // チェックイン照合
-  const handleVerify = async () => {
-    if (!guestQrToken.trim()) return
+  const handlePasskeyAuth = async () => {
     setStep('verifying')
-
-    // URLからトークンを抽出（QRにURLが含まれる場合）
-    let token = guestQrToken.trim()
     try {
-      const url = new URL(token)
-      const parts = url.pathname.split('/')
-      token = parts[parts.length - 1]
-    } catch { /* URL形式でなければそのまま使用 */ }
+      // 認証オプション取得
+      const optRes = await fetch('/api/passkey/auth-options', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ facility_id: facility.id }),
+      })
+      if (!optRes.ok) {
+        const data = await optRes.json()
+        setErrorMsg(data.error || '認証の準備に失敗しました')
+        setStep('error')
+        return
+      }
+      const options = await optRes.json()
 
-    const res = await fetch('/api/checkin-verify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        facility_id: facility.id,
-        guest_qr_token: token,
-        face_photo: facePhotoDataUrl,
-      }),
-    })
+      // ブラウザでパスキー認証
+      const credential = await startAuthentication({ optionsJSON: options })
 
-    const data = await res.json()
+      // 検証
+      const verifyRes = await fetch('/api/passkey/auth-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential, facility_id: facility.id }),
+      })
 
-    if (!res.ok) {
-      setErrorMsg(data.error || '照合に失敗しました')
+      const data = await verifyRes.json()
+      if (!verifyRes.ok) {
+        setErrorMsg(data.error || '照合に失敗しました')
+        setStep('error')
+        return
+      }
+
+      setPinCode(data.pin_code)
+      setStep('success')
+    } catch (e: unknown) {
+      if (e instanceof Error && e.name === 'NotAllowedError') {
+        setErrorMsg('認証がキャンセルされました。もう一度お試しください。')
+      } else {
+        setErrorMsg('パスキーの認証に失敗しました。')
+      }
       setStep('error')
-      return
     }
-
-    setPinCode(data.pin_code)
-    setStep('success')
   }
 
   return (
@@ -114,85 +81,35 @@ export function CheckinFlow({ facility }: { facility: Facility }) {
         {step === 'welcome' && (
           <div className="bg-gray-800 rounded-2xl p-6 text-center">
             <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <QrCode size={32} className="text-white" />
+              <ShieldCheck size={32} className="text-white" />
             </div>
             <h2 className="text-white text-lg font-bold mb-2">チェックイン手続き</h2>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-              事前登録がお済みの方は、チェックイン手続きを開始してください。<br />
-              顔写真の撮影と、メールのQRコードが必要です。
+              事前登録時に設定したFace IDまたは指紋でチェックインします。アプリは不要です。
             </p>
             {facility.checkin_instructions && (
               <div className="bg-gray-700 rounded-xl p-3 mb-4 text-left">
                 <p className="text-xs text-gray-300 leading-relaxed">{facility.checkin_instructions}</p>
               </div>
             )}
-            <Button className="w-full" size="lg" onClick={() => { setStep('face'); startCamera() }}>
+            <Button className="w-full" size="lg" onClick={() => setStep('passkey')}>
               チェックインを開始 <ChevronRight size={18} className="ml-1" />
             </Button>
           </div>
         )}
 
-        {/* STEP: 顔写真撮影 */}
-        {step === 'face' && (
-          <div className="bg-gray-800 rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Camera size={18} className="text-indigo-400" />
-              <h2 className="text-white font-bold">顔写真の撮影</h2>
+        {/* STEP: パスキー認証 */}
+        {step === 'passkey' && (
+          <div className="bg-gray-800 rounded-2xl p-6 text-center">
+            <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Fingerprint size={32} className="text-white" />
             </div>
-            <p className="text-gray-400 text-xs mb-4">正面を向いて、顔全体が映るように撮影してください（法令要件）</p>
-
-            <div className="relative bg-black rounded-xl overflow-hidden aspect-[4/3] mb-4">
-              <video ref={videoRef} className="w-full h-full object-cover" playsInline muted />
-              {!cameraActive && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-gray-500 text-sm">カメラを起動中...</p>
-                </div>
-              )}
-              {/* 顔ガイド枠 */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-40 h-52 border-2 border-dashed border-white/40 rounded-full" />
-              </div>
-            </div>
-            <canvas ref={canvasRef} className="hidden" />
-
-            <Button className="w-full" size="lg" onClick={capturePhoto} disabled={!cameraActive}>
-              <Camera size={18} className="mr-2" /> 撮影する
-            </Button>
-          </div>
-        )}
-
-        {/* STEP: QRコード入力 */}
-        {step === 'qr_input' && (
-          <div className="bg-gray-800 rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <QrCode size={18} className="text-indigo-400" />
-              <h2 className="text-white font-bold">チェックイン用QRコード</h2>
-            </div>
-
-            {facePhotoDataUrl && (
-              <div className="flex items-center gap-2 bg-green-900/30 border border-green-600 rounded-xl px-3 py-2 mb-4">
-                <CheckCircle size={14} className="text-green-400" />
-                <p className="text-green-400 text-xs">顔写真の撮影が完了しました</p>
-              </div>
-            )}
-
-            <p className="text-gray-400 text-xs mb-4 leading-relaxed">
-              メールに届いた「チェックイン用リンクを開く」ボタンをタップするか、
-              URLをこちらに貼り付けてください。
+            <h2 className="text-white font-bold text-lg mb-2">本人確認</h2>
+            <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+              事前登録時に設定したパスキーで<br />本人確認を行います。
             </p>
-
-            <textarea
-              className="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-              rows={3}
-              placeholder="https://checkin.example.com/checkin-verify/..."
-              value={guestQrToken}
-              onChange={e => setGuestQrToken(e.target.value)}
-            />
-
-            <p className="text-gray-500 text-xs mt-2 mb-4">※ QRコードリーダーで読み取ったURLをそのまま貼り付けてください</p>
-
-            <Button className="w-full" size="lg" onClick={handleVerify} disabled={!guestQrToken.trim()}>
-              照合してチェックイン <ChevronRight size={18} className="ml-1" />
+            <Button className="w-full" size="lg" onClick={handlePasskeyAuth}>
+              Face ID / 指紋で認証する
             </Button>
           </div>
         )}
@@ -201,7 +118,7 @@ export function CheckinFlow({ facility }: { facility: Facility }) {
         {step === 'verifying' && (
           <div className="bg-gray-800 rounded-2xl p-8 text-center">
             <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white font-medium">予約情報を照合中...</p>
+            <p className="text-white font-medium">本人確認中...</p>
             <p className="text-gray-400 text-sm mt-1">しばらくお待ちください</p>
           </div>
         )}

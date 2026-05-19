@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { startRegistration } from '@simplewebauthn/browser'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { CheckCircle, ChevronRight, ChevronLeft, Upload, X } from 'lucide-react'
+import { CheckCircle, ChevronRight, ChevronLeft, Upload, X, Fingerprint } from 'lucide-react'
 
 interface Props {
   token: string
@@ -13,7 +14,7 @@ interface Props {
   numGuests: number
 }
 
-type Step = 'basic' | 'passport' | 'terms' | 'done'
+type Step = 'basic' | 'passport' | 'terms' | 'passkey' | 'done'
 
 const TERMS_TEXT = `宿泊約款・ハウスルール
 
@@ -37,6 +38,7 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
   const [step, setStep] = useState<Step>('basic')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [guestRecordId, setGuestRecordId] = useState('')
 
   // Step 1: 基本情報
   const [basic, setBasic] = useState({
@@ -93,8 +95,50 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
       return
     }
 
-    setStep('done')
+    const data = await res.json()
+    setGuestRecordId(data.guest_record_id)
+    setStep('passkey')
     setLoading(false)
+  }
+
+  const handlePasskeyRegister = async () => {
+    setLoading(true)
+    setError('')
+    try {
+      // オプション取得
+      const optRes = await fetch('/api/passkey/register-options', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ guest_record_id: guestRecordId }),
+      })
+      const options = await optRes.json()
+
+      // ブラウザでパスキー作成（Face ID / 指紋）
+      const credential = await startRegistration({ optionsJSON: options })
+
+      // 検証・保存
+      const verifyRes = await fetch('/api/passkey/register-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ guest_record_id: guestRecordId, credential }),
+      })
+
+      if (!verifyRes.ok) {
+        const data = await verifyRes.json()
+        setError(data.error || 'パスキーの登録に失敗しました')
+        return
+      }
+
+      setStep('done')
+    } catch (e: unknown) {
+      if (e instanceof Error && e.name === 'NotAllowedError') {
+        setError('認証がキャンセルされました。もう一度お試しください。')
+      } else {
+        setError('パスキーの登録に失敗しました。このデバイスがWebAuthnに対応しているか確認してください。')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   const nextStep = () => {
@@ -116,7 +160,7 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
         <p className="text-gray-500 text-sm leading-relaxed">
           チェックイン用QRコードをメールでお送りしました。<br />
           当日は施設玄関のQRコードをスキャンし、<br />
-          メールのQRコードを画面に表示してください。
+          Face ID または指紋認証でチェックインしてください。
         </p>
       </div>
     )
@@ -126,7 +170,33 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
   const steps = basic.is_foreign
     ? ['基本情報', 'パスポート', '規約同意']
     : ['基本情報', '規約同意']
-  const currentIdx = step === 'basic' ? 0 : step === 'passport' ? 1 : basic.is_foreign ? 2 : 1
+  const currentIdx = step === 'basic' ? 0 : step === 'passport' ? 1 : (step === 'terms' ? (basic.is_foreign ? 2 : 1) : -1)
+
+  // passkey ステップはインジケーター非表示
+  if (step === 'passkey') {
+    return (
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="p-6">
+          <div className="space-y-6 text-center">
+            <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto">
+              <Fingerprint size={32} className="text-indigo-600" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-2">チェックイン用パスキーの設定</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                施設到着時のチェックインに使用します。<br />
+                Face ID または指紋認証でパスキーを登録してください。
+              </p>
+            </div>
+            {error && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
+            <Button className="w-full" size="lg" loading={loading} onClick={handlePasskeyRegister}>
+              Face ID / 指紋でパスキーを登録
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -243,7 +313,7 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
                 <ChevronLeft size={16} className="mr-1" /> 戻る
               </Button>
               <Button className="flex-1" disabled={!agreed} loading={loading} onClick={handleSubmit}>
-                登録を完了する
+                次へ（パスキー設定）
               </Button>
             </div>
           </div>
