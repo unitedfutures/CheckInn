@@ -54,7 +54,7 @@ export default async function LandingPage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
-            QRコードひとつで本人確認・宿泊者名簿への自動記録まで。
+            Face ID・指紋によるパスキー認証で本人確認、宿泊者名簿への自動記録まで。
             スタッフ不在でも、旅館業法の要件を満たすチェックインを実現します。
           </p>
 
@@ -177,7 +177,7 @@ export default async function LandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="features">
             {[
               { icon: Smartphone, title: '事前登録フォーム', body: 'お客様に宿泊者情報を入力していただくためのURLを発行。氏名・住所・連絡先・パスポート情報（外国人）に加え、顔写真の取得も可能。規約同意も電子取得。' },
-              { icon: QrCode, title: 'ワンタイムQR照合', body: '宿泊者に発行したQRと施設設置のQRをペアリング照合。本人以外は入室不可の二段階認証を実現。' },
+              { icon: ShieldCheck, title: 'パスキー（生体認証）照合', body: '事前登録時にスマホのFace ID・指紋でパスキーを設定。チェックイン時は生体認証のみで本人確認が完了。生体情報は端末外に送信されず、なりすまし・QR転送による不正入室を防止。' },
               { icon: Users, title: '防犯カメラとの組み合わせを推奨', body: '保健所は「事前登録の顔写真と来場者を確認してから解錠」を指導しています。施設への防犯カメラ設置と組み合わせることで、この要件に対応できます。確認方法は事業者様の判断で運用いただけます。' },
               { icon: FileText, title: '宿泊者名簿の自動生成', body: '入力データから名簿を自動生成。3年間クラウド保存・CSV出力に対応。保健所への提示もすぐに対応可能。' },
               { icon: ShieldCheck, title: '本人確認後に解錠', body: '照合完了後にはじめて暗証番号を発行。RemoteLOCK連携でチェックインと同時にスマートロックを解除。' },
@@ -263,9 +263,9 @@ export default async function LandingPage() {
                 {[
                   { label: '初期費用', value: '0円（機器不要）' },
                   { label: '設置', value: 'QRコードを印刷して貼るだけ' },
-                  { label: 'ゲストの操作', value: '自分のスマホで完結' },
+                  { label: 'ゲストの操作', value: 'Face ID / 指紋のみで完結' },
                   { label: '機器の故障リスク', value: 'ゲストのスマホを使うためなし' },
-                  { label: '法令対応', value: '照合・名簿・外国人対応すべて' },
+                  { label: '法令対応', value: '生体認証照合・名簿・外国人対応すべて' },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex items-start justify-between gap-3">
                     <span className="text-xs text-indigo-300 shrink-0 mt-0.5">{label}</span>
@@ -306,40 +306,48 @@ export default async function LandingPage() {
               {
                 step: '01',
                 phase: '予約後（自宅・移動中）',
-                title: '事前登録メールが届く',
-                body: '予約確定後、CheckInnから事前登録フォームのURLが届きます。氏名・住所・連絡先を入力し、規約に同意するだけ。外国人の方はパスポート情報も登録します。',
+                title: '事前登録フォームのURLが届く',
+                body: '予約確定後、CheckInnから事前登録フォームのURLがメールで届きます。氏名・住所・連絡先・顔写真を入力。外国人の方はパスポート情報も登録します。',
                 badge: '事前',
                 badgeColor: 'bg-blue-500',
               },
               {
                 step: '02',
-                phase: '登録完了後',
-                title: 'チェックイン用QRコードが届く',
-                body: '登録が完了すると、チェックイン専用のQRコードリンクがメールで届きます。当日はこのメールをスマホに表示しておくだけでOK。',
+                phase: '事前登録の最後に',
+                title: 'Face ID / 指紋でパスキーを設定',
+                body: '登録の最後にスマホのFace IDまたは指紋認証でパスキーを設定します。これが当日のチェックイン認証に使われます。アプリのインストールは不要。',
                 badge: '事前',
                 badgeColor: 'bg-blue-500',
               },
               {
                 step: '03',
-                phase: '施設到着',
-                title: '玄関のQRコードをスキャン',
-                body: '施設玄関に設置されたQRコードをスマホカメラで読み取ります。アプリ不要。ブラウザが自動で起動します。',
-                badge: '当日',
-                badgeColor: 'bg-green-500',
+                phase: 'パスキー設定完了後',
+                title: 'チェックインリンクがメールで届く',
+                body: 'パスキーの設定が完了すると、当日の施設情報・チェックイン手順をまとめたリンクがメールで届きます。',
+                badge: '事前',
+                badgeColor: 'bg-blue-500',
               },
               {
                 step: '04',
-                phase: '本人照合',
-                title: 'メールのQRコードをかざす',
-                body: '届いたメールのQRリンクを開くと、システムが自動で予約情報と照合。本人確認が完了します。',
+                phase: '施設到着',
+                title: '玄関のQRコードをスキャン',
+                body: '施設玄関に貼られたQRコードをスマホカメラで読み取ります。アプリ不要。ブラウザが自動で起動します。',
                 badge: '当日',
                 badgeColor: 'bg-green-500',
               },
               {
                 step: '05',
+                phase: '本人確認',
+                title: 'Face ID / 指紋で認証するだけ',
+                body: '画面の「認証する」ボタンをタップし、事前に設定したFace IDまたは指紋で認証。生体情報はスマホの外に送信されません。',
+                badge: '当日',
+                badgeColor: 'bg-green-500',
+              },
+              {
+                step: '06',
                 phase: 'チェックイン完了',
                 title: '暗証番号が表示される',
-                body: '照合完了と同時に暗証番号が画面に表示されます。その番号を入力するだけで入室完了。スタッフ対応は一切不要です。',
+                body: '認証完了と同時に暗証番号が画面に表示されます。その番号を入力するだけで入室完了。スタッフ対応は一切不要です。',
                 badge: '完了',
                 badgeColor: 'bg-indigo-500',
               },
@@ -383,7 +391,7 @@ export default async function LandingPage() {
             <div className="divide-y divide-indigo-100">
               {[
                 { req: '事前に本人確認情報・事前共有情報を共有', how: '予約後に登録フォームURLを送付。氏名・住所・連絡先を取得し、チェックイン用QR（事前共有情報）を発行' },
-                { req: '施設の自動チェックイン機器等での照合', how: '施設設置QR＋ゲスト保有QRのペアリング照合による本人確認（「等」の解釈に対応）' },
+                { req: '施設の自動チェックイン機器等での照合', how: 'スマホのFace ID・指紋によるパスキー（WebAuthn）認証で本人確認。生体情報は端末内で完結し、予約者本人以外は認証不可' },
                 { req: '顔を判別できる角度での録画', how: '事前登録時に顔写真を取得・保存。施設設置の防犯カメラと組み合わせることで「来場者の顔確認後に解錠」という保健所指導の運用が可能（防犯カメラは事業者様にてご用意ください）' },
                 { req: '鍵は本人確認後のみ交付', how: '照合完了後にはじめて暗証番号を発行。RemoteLOCK連動で本人確認前の解錠を防止' },
                 { req: '宿泊者名簿の作成・3年間保存', how: '入力データから名簿を自動生成。クラウドDBに3年間保存・CSV出力対応' },
