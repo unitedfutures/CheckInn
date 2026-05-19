@@ -178,8 +178,8 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6">
           <div className="space-y-6 text-center">
-            <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto">
-              <Fingerprint size={32} className="text-indigo-600" />
+            <div className="w-16 h-16 bg-navy-50 rounded-2xl flex items-center justify-center mx-auto">
+              <Fingerprint size={32} className="text-navy-500" />
             </div>
             <div>
               <h3 className="font-semibold text-gray-900 mb-2">チェックイン用パスキーの設定</h3>
@@ -204,9 +204,9 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
       <div className="flex border-b border-gray-100">
         {steps.map((s, i) => (
           <div key={s} className={`flex-1 py-3 text-center text-xs font-medium transition-colors
-            ${i === currentIdx ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50' : 'text-gray-400'}`}>
+            ${i === currentIdx ? 'text-navy-500 border-b-2 border-navy-500 bg-navy-50' : 'text-gray-400'}`}>
             <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs mr-1
-              ${i === currentIdx ? 'bg-indigo-600 text-white' : i < currentIdx ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'}`}>
+              ${i === currentIdx ? 'bg-navy-500 text-white' : i < currentIdx ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'}`}>
               {i < currentIdx ? '✓' : i + 1}
             </span>
             {s}
@@ -229,13 +229,13 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
               value={basic.address} onChange={e => setB('address', e.target.value)} required />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">宿泊人数 *</label>
-              <select className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              <select className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-navy-500"
                 value={basic.num_guests} onChange={e => setB('num_guests', parseInt(e.target.value))}>
                 {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n}名</option>)}
               </select>
             </div>
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="rounded border-gray-300 text-indigo-600"
+              <input type="checkbox" className="rounded border-gray-300 text-navy-500"
                 checked={basic.is_foreign} onChange={e => setB('is_foreign', e.target.checked)} />
               <span className="text-sm text-gray-700">外国人宿泊者を含む（パスポート情報が必要です）</span>
             </label>
@@ -268,7 +268,7 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
                 </div>
               ) : (
                 <button onClick={() => fileInputRef.current?.click()}
-                  className="w-full border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-indigo-400 transition-colors">
+                  className="w-full border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-navy-400 transition-colors">
                   <Upload size={24} className="text-gray-400 mx-auto mb-2" />
                   <p className="text-sm text-gray-500">タップして画像を選択</p>
                   <p className="text-xs text-gray-400 mt-1">JPG / PNG</p>
@@ -298,7 +298,7 @@ export function PreCheckinForm({ token, defaultEmail, defaultName, numGuests }: 
               {TERMS_TEXT}
             </div>
             <label className="flex items-start gap-3 cursor-pointer">
-              <input type="checkbox" className="mt-0.5 rounded border-gray-300 text-indigo-600"
+              <input type="checkbox" className="mt-0.5 rounded border-gray-300 text-navy-500"
                 checked={agreed} onChange={e => setAgreed(e.target.checked)} />
               <span className="text-sm text-gray-700">
                 上記の宿泊約款およびハウスルールを読み、内容に同意します。<br />

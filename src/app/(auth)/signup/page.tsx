@@ -43,7 +43,7 @@ export default function SignupPage() {
 
   if (done) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-navy-50 to-white flex items-center justify-center p-4">
         <div className="w-full max-w-md text-center">
           <div className="text-5xl mb-4">✉️</div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">確認メールを送信しました</h2>
@@ -51,7 +51,7 @@ export default function SignupPage() {
             {email} に確認メールを送りました。<br />
             メール内のリンクをクリックして登録を完了してください。
           </p>
-          <Link href="/login" className="mt-6 inline-block text-indigo-600 hover:underline text-sm">
+          <Link href="/login" className="mt-6 inline-block text-navy-500 hover:underline text-sm">
             ログインページへ
           </Link>
         </div>
@@ -60,10 +60,10 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-600 tracking-wide">CheckInn</h1>
+          <h1 className="text-3xl font-bold text-navy-500 tracking-wide">CheckInn</h1>
           <p className="text-gray-500 mt-2 text-sm">無人宿泊施設 セルフチェックインシステム</p>
         </div>
 
@@ -111,7 +111,7 @@ export default function SignupPage() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             すでにアカウントをお持ちの方は{' '}
-            <Link href="/login" className="text-indigo-600 hover:underline font-medium">
+            <Link href="/login" className="text-navy-500 hover:underline font-medium">
               ログイン
             </Link>
           </p>

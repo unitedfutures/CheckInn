@@ -33,10 +33,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-600 tracking-wide">CheckInn</h1>
+          <h1 className="text-3xl font-bold text-navy-500 tracking-wide">CheckInn</h1>
           <p className="text-gray-500 mt-2 text-sm">無人宿泊施設 セルフチェックインシステム</p>
         </div>
 
@@ -74,7 +74,7 @@ export default function LoginPage() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             アカウントをお持ちでない方は{' '}
-            <Link href="/signup" className="text-indigo-600 hover:underline font-medium">
+            <Link href="/signup" className="text-navy-500 hover:underline font-medium">
               新規登録
             </Link>
           </p>

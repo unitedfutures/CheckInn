@@ -5,6 +5,7 @@ import {
   CheckCircle, AlertTriangle, Building2, Clock, Lock,
   ChevronRight, Star, Users, Globe
 } from 'lucide-react'
+import { Logo } from '@/components/logo'
 
 export default async function LandingPage() {
   const supabase = await createClient()
@@ -16,21 +17,21 @@ export default async function LandingPage() {
       {/* ============ NAV ============ */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="text-xl font-black text-indigo-600 tracking-widest">CheckInn</span>
+          <Logo variant="white" size="sm" />
           <div className="flex items-center gap-4">
             <Link href="#features" className="hidden sm:block text-sm text-gray-500 hover:text-gray-900 transition-colors">機能</Link>
             <Link href="#flow" className="hidden sm:block text-sm text-gray-500 hover:text-gray-900 transition-colors">使い方</Link>
             <Link href="#compliance" className="hidden sm:block text-sm text-gray-500 hover:text-gray-900 transition-colors">法令対応</Link>
             {user ? (
               <Link href="/dashboard"
-                className="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                className="bg-navy-500 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-navy-600 transition-colors">
                 ダッシュボード
               </Link>
             ) : (
               <>
                 <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">ログイン</Link>
                 <Link href="/signup"
-                  className="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                  className="bg-navy-500 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-navy-600 transition-colors">
                   無料で始める
                 </Link>
               </>
@@ -40,7 +41,7 @@ export default async function LandingPage() {
       </nav>
 
       {/* ============ HERO ============ */}
-      <section className="pt-32 pb-24 px-6 bg-gradient-to-b from-indigo-50 via-white to-white">
+      <section className="pt-32 pb-24 px-6 bg-gradient-to-b from-navy-50 via-white to-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-xs font-medium px-4 py-2 rounded-full mb-8">
             <AlertTriangle size={13} />
@@ -49,7 +50,7 @@ export default async function LandingPage() {
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight tracking-tight mb-6">
             無人宿泊施設の<br />
-            <span className="text-indigo-600">チェックイン</span>を、<br />
+            <span style={{color: '#C9A84C'}}>チェックイン</span>を、<br />
             法令対応で完全自動化。
           </h1>
 
@@ -60,7 +61,7 @@ export default async function LandingPage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/signup"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-indigo-600 text-white font-bold text-base px-8 py-4 rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-navy-500 text-white font-bold text-base px-8 py-4 rounded-xl hover:bg-navy-600 transition-colors shadow-lg shadow-navy-200">
               無料で始める
               <ArrowRight size={18} />
             </Link>
@@ -85,7 +86,7 @@ export default async function LandingPage() {
             </div>
             <div className="grid grid-cols-4 gap-4 p-6">
               {[
-                { label: '施設数', value: '4', color: 'text-indigo-400' },
+                { label: '施設数', value: '4', color: 'text-navy-300' },
                 { label: '今月の予約', value: '28', color: 'text-blue-400' },
                 { label: 'チェックイン済み', value: '12', color: 'text-green-400' },
                 { label: '宿泊者名簿', value: '84', color: 'text-orange-400' },
@@ -117,7 +118,7 @@ export default async function LandingPage() {
       <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-indigo-600 font-bold text-sm tracking-widest mb-3">PROBLEM</p>
+            <p className="text-navy-500 font-bold text-sm tracking-widest mb-3">PROBLEM</p>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
               無人運営が、<span className="text-red-600">法律の壁</span>に直面しています。
             </h2>
@@ -164,9 +165,9 @@ export default async function LandingPage() {
       <section className="py-24 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-indigo-600 font-bold text-sm tracking-widest mb-3">SOLUTION</p>
+            <p className="text-navy-500 font-bold text-sm tracking-widest mb-3">SOLUTION</p>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
-              CheckInnが、すべてを<span className="text-indigo-600">ワンストップ</span>で解決。
+              CheckInnが、すべてを<span style={{color: '#C9A84C'}}>ワンストップ</span>で解決。
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto">
               予約から名簿管理まで、旅館業法対応に必要なプロセスを完全デジタル化。
@@ -183,9 +184,9 @@ export default async function LandingPage() {
               { icon: ShieldCheck, title: '本人確認後に解錠', body: '照合完了後にはじめて暗証番号を発行。RemoteLOCK連携でチェックインと同時にスマートロックを解除。' },
               { icon: Globe, title: '多言語・インバウンド対応', body: '日本語・英語に対応。外国人宿泊者のパスポート番号・国籍・旅券画像も取得・保存できます。' },
             ].map(({ icon: Icon, title, body }) => (
-              <div key={title} className="group p-6 rounded-2xl border border-gray-200 hover:border-indigo-200 hover:shadow-md transition-all">
-                <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition-colors">
-                  <Icon size={20} className="text-indigo-600" />
+              <div key={title} className="group p-6 rounded-2xl border border-gray-200 hover:border-navy-200 hover:shadow-md transition-all">
+                <div className="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-navy-100 transition-colors">
+                  <Icon size={20} className="text-navy-500" />
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{body}</p>
@@ -199,9 +200,9 @@ export default async function LandingPage() {
       <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-indigo-600 font-bold text-sm tracking-widest mb-3">WHY CHECKINN</p>
+            <p className="text-navy-500 font-bold text-sm tracking-widest mb-3">WHY CHECKINN</p>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
-              他社システムより、<span className="text-indigo-600">圧倒的に低コスト</span>。
+              他社システムより、<span style={{color: '#C9A84C'}}>圧倒的に低コスト</span>。
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto">
               タブレット設置型・顔認証型は機器代だけで数十万円〜。
@@ -253,8 +254,8 @@ export default async function LandingPage() {
             </div>
 
             {/* CheckInn */}
-            <div className="bg-indigo-600 rounded-2xl border border-indigo-600 overflow-hidden shadow-xl shadow-indigo-200 ring-2 ring-indigo-400">
-              <div className="bg-indigo-700 px-6 py-4 text-center flex items-center justify-center gap-2">
+            <div className="bg-navy-500 rounded-2xl border border-navy-500 overflow-hidden shadow-xl shadow-navy-200 ring-2 ring-navy-400">
+              <div className="bg-navy-600 px-6 py-4 text-center flex items-center justify-center gap-2">
                 <Star size={14} className="text-yellow-300 fill-yellow-300" />
                 <p className="text-sm font-black text-white tracking-wide">CheckInn（QRコード型）</p>
                 <Star size={14} className="text-yellow-300 fill-yellow-300" />
@@ -268,15 +269,15 @@ export default async function LandingPage() {
                   { label: '法令対応', value: '生体認証照合・名簿・外国人対応すべて' },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex items-start justify-between gap-3">
-                    <span className="text-xs text-indigo-300 shrink-0 mt-0.5">{label}</span>
+                    <span className="text-xs text-navy-200 shrink-0 mt-0.5">{label}</span>
                     <span className="text-xs font-bold text-white text-right">{value}</span>
                   </div>
                 ))}
               </div>
               <div className="px-6 pb-6">
-                <div className="bg-indigo-500/50 rounded-xl px-4 py-3 text-center">
+                <div className="bg-navy-500/50 rounded-xl px-4 py-3 text-center">
                   <p className="text-white text-xs font-bold">月額費用のみで導入可能</p>
-                  <p className="text-indigo-200 text-xs mt-0.5">印刷代だけで今日から運用開始</p>
+                  <p className="text-navy-100 text-xs mt-0.5">印刷代だけで今日から運用開始</p>
                 </div>
               </div>
             </div>
@@ -289,14 +290,14 @@ export default async function LandingPage() {
       </section>
 
       {/* ============ FLOW ============ */}
-      <section className="py-24 px-6 bg-indigo-950" id="flow">
+      <section className="py-24 px-6 bg-navy-700" id="flow">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-indigo-400 font-bold text-sm tracking-widest mb-3">GUEST FLOW</p>
+            <p className="text-navy-300 font-bold text-sm tracking-widest mb-3">GUEST FLOW</p>
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
               たった3ステップで完結。
             </h2>
-            <p className="text-indigo-300 max-w-xl mx-auto">
+            <p className="text-navy-200 max-w-xl mx-auto">
               アプリ不要、専用機器不要。スマホのFace IDまたは指紋認証だけで、法令に対応したチェックインが完結します。
             </p>
           </div>
@@ -329,17 +330,17 @@ export default async function LandingPage() {
               },
             ].map(({ step, badge, badgeColor, title, body, sub }) => (
               <div key={step} className="flex gap-5 items-start bg-white/5 rounded-2xl p-6 border border-white/10">
-                <div className="shrink-0 w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center">
+                <div className="shrink-0 w-12 h-12 rounded-xl bg-navy-500 flex items-center justify-center">
                   <span className="text-white font-black text-sm">{step}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <span className={`text-white text-xs font-bold px-2 py-0.5 rounded-full ${badgeColor} mb-2 inline-block`}>{badge}</span>
                   <h3 className="text-white font-bold mb-1">{title}</h3>
-                  <p className="text-indigo-200 text-sm leading-relaxed">{body}</p>
+                  <p className="text-navy-100 text-sm leading-relaxed">{body}</p>
                   {sub && (
                     <div className="mt-3 space-y-1">
                       {sub.map(s => (
-                        <div key={s} className="flex items-center gap-2 text-xs text-indigo-300">
+                        <div key={s} className="flex items-center gap-2 text-xs text-navy-200">
                           <CheckCircle size={12} className="text-green-400 shrink-0" />
                           {s}
                         </div>
@@ -357,9 +358,9 @@ export default async function LandingPage() {
       <section className="py-24 px-6 bg-white" id="compliance">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-indigo-600 font-bold text-sm tracking-widest mb-3">COMPLIANCE</p>
+            <p className="text-navy-500 font-bold text-sm tracking-widest mb-3">COMPLIANCE</p>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
-              旅館業法改正に、<span className="text-indigo-600">完全準拠</span>。
+              旅館業法改正に、<span style={{color: '#C9A84C'}}>完全準拠</span>。
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto">
               令和7年4月施行の旅館業衛生等管理要領②の方法に対応。
@@ -367,11 +368,11 @@ export default async function LandingPage() {
             </p>
           </div>
 
-          <div className="bg-indigo-50 rounded-2xl overflow-hidden border border-indigo-100">
-            <div className="bg-indigo-600 px-6 py-4">
+          <div className="bg-navy-50 rounded-2xl overflow-hidden border border-navy-100">
+            <div className="bg-navy-500 px-6 py-4">
               <p className="text-white font-bold text-sm">旅館業法 要件対応表</p>
             </div>
-            <div className="divide-y divide-indigo-100">
+            <div className="divide-y divide-navy-100">
               {[
                 { req: '事前に本人確認情報・事前共有情報を共有', how: '予約後に登録フォームURLを送付。氏名・住所・連絡先を取得し、チェックイン用QR（事前共有情報）を発行' },
                 { req: '施設の自動チェックイン機器等での照合', how: 'スマホのFace ID・指紋によるパスキー（WebAuthn）認証で本人確認。生体情報は端末内で完結し、予約者本人以外は認証不可' },
@@ -399,7 +400,7 @@ export default async function LandingPage() {
       {/* ============ BEDS24 ============ */}
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-indigo-600 font-bold text-sm tracking-widest mb-3">INTEGRATION</p>
+          <p className="text-navy-500 font-bold text-sm tracking-widest mb-3">INTEGRATION</p>
           <h2 className="text-3xl font-black text-gray-900 mb-4">
             Beds24と連携して、予約を自動同期。
           </h2>
@@ -419,23 +420,23 @@ export default async function LandingPage() {
       </section>
 
       {/* ============ CTA ============ */}
-      <section className="py-24 px-6 bg-indigo-600">
+      <section className="py-24 px-6 bg-navy-500">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
             今すぐ、無人チェックインを<br className="hidden sm:block" />法令対応に変えましょう。
           </h2>
-          <p className="text-indigo-200 mb-10 max-w-xl mx-auto">
+          <p className="text-navy-100 mb-10 max-w-xl mx-auto">
             初期費用0円、クレジットカード不要。
             まずは無料でアカウントを作成して、CheckInnをお試しください。
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/signup"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-bold text-base px-8 py-4 rounded-xl hover:bg-indigo-50 transition-colors shadow-lg">
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-navy-700 font-bold text-base px-8 py-4 rounded-xl hover:bg-gold-50 transition-colors shadow-lg">
               無料でアカウントを作成
               <ArrowRight size={18} />
             </Link>
             <Link href="/login"
-              className="w-full sm:w-auto inline-flex items-center justify-center text-indigo-200 font-medium text-base px-8 py-4 rounded-xl border border-indigo-400 hover:bg-indigo-700 transition-colors">
+              className="w-full sm:w-auto inline-flex items-center justify-center text-navy-100 font-medium text-base px-8 py-4 rounded-xl border border-navy-400 hover:bg-navy-600 transition-colors">
               ログイン
             </Link>
           </div>
@@ -443,9 +444,9 @@ export default async function LandingPage() {
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="bg-gray-900 py-10 px-6">
+      <footer className="bg-navy-700 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-white font-black tracking-widest">CheckInn</span>
+          <Logo variant="default" size="sm" />
           <p className="text-gray-500 text-xs">© 2026 CheckInn. All rights reserved.</p>
           <div className="flex gap-6 text-xs text-gray-500">
             <Link href="#" className="hover:text-gray-300 transition-colors">プライバシーポリシー</Link>

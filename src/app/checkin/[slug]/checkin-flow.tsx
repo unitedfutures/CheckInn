@@ -72,7 +72,7 @@ export function CheckinFlow({ facility }: { facility: Facility }) {
 
         {/* ヘッダー */}
         <div className="text-center mb-6">
-          <p className="text-indigo-400 font-bold text-lg tracking-widest">CheckInn</p>
+          <p className="text-gold-400 font-bold text-lg tracking-widest">CheckInn</p>
           <h1 className="text-white text-xl font-bold mt-1">{facility.name}</h1>
           {facility.address && <p className="text-gray-400 text-xs mt-1">{facility.address}</p>}
         </div>
@@ -80,7 +80,7 @@ export function CheckinFlow({ facility }: { facility: Facility }) {
         {/* STEP: 受付開始 */}
         {step === 'welcome' && (
           <div className="bg-gray-800 rounded-2xl p-6 text-center">
-            <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-navy-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <ShieldCheck size={32} className="text-white" />
             </div>
             <h2 className="text-white text-lg font-bold mb-2">チェックイン手続き</h2>
@@ -101,7 +101,7 @@ export function CheckinFlow({ facility }: { facility: Facility }) {
         {/* STEP: パスキー認証 */}
         {step === 'passkey' && (
           <div className="bg-gray-800 rounded-2xl p-6 text-center">
-            <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-navy-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <Fingerprint size={32} className="text-white" />
             </div>
             <h2 className="text-white font-bold text-lg mb-2">本人確認</h2>
@@ -117,7 +117,7 @@ export function CheckinFlow({ facility }: { facility: Facility }) {
         {/* STEP: 照合中 */}
         {step === 'verifying' && (
           <div className="bg-gray-800 rounded-2xl p-8 text-center">
-            <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <div className="w-12 h-12 border-4 border-navy-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
             <p className="text-white font-medium">本人確認中...</p>
             <p className="text-gray-400 text-sm mt-1">しばらくお待ちください</p>
           </div>
@@ -130,10 +130,10 @@ export function CheckinFlow({ facility }: { facility: Facility }) {
             <h2 className="text-white text-xl font-bold mb-1">チェックイン完了</h2>
             <p className="text-gray-400 text-sm mb-6">ご宿泊ありがとうございます。</p>
 
-            <div className="bg-indigo-900/50 border border-indigo-500 rounded-2xl p-6 mb-4">
-              <p className="text-indigo-300 text-sm mb-2">玄関の暗証番号</p>
+            <div className="bg-navy-700/50 border border-gold-400 rounded-2xl p-6 mb-4">
+              <p className="text-gold-300 text-sm mb-2">玄関の暗証番号</p>
               <p className="text-white text-5xl font-black tracking-[0.3em] font-mono">{pinCode}</p>
-              <p className="text-indigo-400 text-xs mt-3">※ この番号はご滞在期間中のみ有効です</p>
+              <p className="text-navy-300 text-xs mt-3">※ この番号はご滞在期間中のみ有効です</p>
             </div>
 
             {facility.emergency_contact && (
