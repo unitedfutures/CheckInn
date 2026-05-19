@@ -294,10 +294,10 @@ export default async function LandingPage() {
           <div className="text-center mb-16">
             <p className="text-indigo-400 font-bold text-sm tracking-widest mb-3">GUEST FLOW</p>
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
-              宿泊者は、たったこれだけ。
+              たった3ステップで完結。
             </h2>
             <p className="text-indigo-300 max-w-xl mx-auto">
-              アプリのインストール不要。スマホとメールだけで、すべてのチェックインが完結します。
+              アプリ不要、専用機器不要。スマホのFace IDまたは指紋認証だけで、法令に対応したチェックインが完結します。
             </p>
           </div>
 
@@ -305,64 +305,47 @@ export default async function LandingPage() {
             {[
               {
                 step: '01',
-                phase: '予約後（自宅・移動中）',
-                title: '事前登録フォームのURLが届く',
-                body: '予約確定後、CheckInnから事前登録フォームのURLがメールで届きます。氏名・住所・連絡先・顔写真を入力。外国人の方はパスポート情報も登録します。',
                 badge: '事前',
                 badgeColor: 'bg-blue-500',
+                title: '事業者がゲストに登録URLを送る',
+                body: '宿泊事業者が事前登録フォームのURLをゲストに送付します。予約確認メールへの記載や自動送信メールへの組み込みがおすすめです。',
+                sub: null,
               },
               {
                 step: '02',
-                phase: '事前登録の最後に',
-                title: 'Face ID / 指紋でパスキーを設定',
-                body: '登録の最後にスマホのFace IDまたは指紋認証でパスキーを設定します。これが当日のチェックイン認証に使われます。アプリのインストールは不要。',
                 badge: '事前',
                 badgeColor: 'bg-blue-500',
+                title: 'ゲストがスマホで情報を登録',
+                body: '氏名・住所・連絡先・顔写真を入力。外国人の方はパスポート情報も登録します。登録の最後にFace IDまたは指紋でパスキーを設定して完了。アプリのインストールは不要です。',
+                sub: null,
               },
               {
                 step: '03',
-                phase: 'パスキー設定完了後',
-                title: 'チェックインリンクがメールで届く',
-                body: 'パスキーの設定が完了すると、当日の施設情報・チェックイン手順をまとめたリンクがメールで届きます。',
-                badge: '事前',
-                badgeColor: 'bg-blue-500',
-              },
-              {
-                step: '04',
-                phase: '施設到着',
-                title: '玄関のQRコードをスキャン',
-                body: '施設玄関に貼られたQRコードをスマホカメラで読み取ります。アプリ不要。ブラウザが自動で起動します。',
                 badge: '当日',
                 badgeColor: 'bg-green-500',
+                title: '玄関でスキャン → 認証 → 入室',
+                body: '施設玄関のQRコードをスマホカメラで読み取り、画面の「認証する」をタップ。事前に設定したFace IDまたは指紋で認証が完了すると、暗証番号が画面に表示されます。',
+                sub: ['① 玄関のQRコードをスキャン', '② Face ID / 指紋で認証', '③ 暗証番号が表示されて入室完了'],
               },
-              {
-                step: '05',
-                phase: '本人確認',
-                title: 'Face ID / 指紋で認証するだけ',
-                body: '画面の「認証する」ボタンをタップし、事前に設定したFace IDまたは指紋で認証。生体情報はスマホの外に送信されません。',
-                badge: '当日',
-                badgeColor: 'bg-green-500',
-              },
-              {
-                step: '06',
-                phase: 'チェックイン完了',
-                title: '暗証番号が表示される',
-                body: '認証完了と同時に暗証番号が画面に表示されます。その番号を入力するだけで入室完了。スタッフ対応は一切不要です。',
-                badge: '完了',
-                badgeColor: 'bg-indigo-500',
-              },
-            ].map(({ step, phase, title, body, badge, badgeColor }) => (
+            ].map(({ step, badge, badgeColor, title, body, sub }) => (
               <div key={step} className="flex gap-5 items-start bg-white/5 rounded-2xl p-6 border border-white/10">
                 <div className="shrink-0 w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center">
                   <span className="text-white font-black text-sm">{step}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-white text-xs font-bold px-2 py-0.5 rounded-full ${badgeColor}`}>{badge}</span>
-                    <span className="text-indigo-400 text-xs">{phase}</span>
-                  </div>
+                  <span className={`text-white text-xs font-bold px-2 py-0.5 rounded-full ${badgeColor} mb-2 inline-block`}>{badge}</span>
                   <h3 className="text-white font-bold mb-1">{title}</h3>
                   <p className="text-indigo-200 text-sm leading-relaxed">{body}</p>
+                  {sub && (
+                    <div className="mt-3 space-y-1">
+                      {sub.map(s => (
+                        <div key={s} className="flex items-center gap-2 text-xs text-indigo-300">
+                          <CheckCircle size={12} className="text-green-400 shrink-0" />
+                          {s}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
