@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Open door -->
+  <!-- Door frame (outer rounded rect) -->
+  <rect x="4" y="4" width="46" height="88" rx="5" fill="#1C3461"/>
+  <!-- Door opening (white inside) -->
+  <rect x="9" y="9" width="36" height="78" rx="3" fill="white"/>
+  <!-- Door panel (open, perspective) -->
+  <path d="M9 9 L42 14 L42 83 L9 87 Z" fill="#1C3461" rx="2"/>
+  <!-- Light ray showing door open -->
+  <path d="M9 9 L9 87 L4 92 L4 4 Z" fill="white" opacity="0.6"/>
+  <!-- Door knob -->
+  <ellipse cx="36" cy="50" rx="3" ry="4" fill="white"/>
+  <!-- Floor perspective lines -->
+  <path d="M4 88 L55 83" stroke="#1C3461" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+
+  <!-- QR code (right side) -->
+  <!-- Top-left corner marker -->
+  <rect x="58" y="8" width="16" height="16" rx="2.5" fill="#1C3461"/>
+  <rect x="61" y="11" width="10" height="10" rx="1.5" fill="white"/>
+  <rect x="63.5" y="13.5" width="5" height="5" rx="0.8" fill="#1C3461"/>
+
+  <!-- Top-right corner marker -->
+  <rect x="80" y="8" width="16" height="16" rx="2.5" fill="#1C3461"/>
+  <rect x="83" y="11" width="10" height="10" rx="1.5" fill="white"/>
+  <rect x="85.5" y="13.5" width="5" height="5" rx="0.8" fill="#1C3461"/>
+
+  <!-- Bottom-left corner marker -->
+  <rect x="58" y="30" width="16" height="16" rx="2.5" fill="#1C3461"/>
+  <rect x="61" y="33" width="10" height="10" rx="1.5" fill="white"/>
+  <rect x="63.5" y="35.5" width="5" height="5" rx="0.8" fill="#1C3461"/>
+
+  <!-- Data dots (center/right area of QR) -->
+  <!-- Row 1 -->
+  <rect x="80" y="30" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="87" y="30" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="92" y="30" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <!-- Row 2 -->
+  <rect x="80" y="37" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="87" y="37" width="9" height="4" rx="0.8" fill="#1C3461"/>
+  <!-- Row 3 -->
+  <rect x="80" y="44" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="87" y="44" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="92" y="44" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <!-- Separator dots -->
+  <rect x="58" y="26" width="4" height="2" rx="0.5" fill="#1C3461"/>
+  <rect x="65" y="26" width="4" height="2" rx="0.5" fill="#1C3461"/>
+  <rect x="72" y="26" width="4" height="2" rx="0.5" fill="#1C3461"/>
+  <!-- Extra dots -->
+  <rect x="58" y="50" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="65" y="50" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="72" y="50" width="4" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="80" y="50" width="9" height="4" rx="0.8" fill="#1C3461"/>
+  <rect x="92" y="50" width="4" height="4" rx="0.8" fill="#1C3461"/>
+</svg>

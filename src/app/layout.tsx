@@ -14,7 +14,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "CheckInn | セルフチェックインシステム",
-  description: "無人宿泊施設向けセルフチェックインシステム",
+  description: "無人宿泊施設向けセルフチェックインシステム。Face ID・指紋によるパスキー認証で、旅館業法に対応した安全なチェックインを実現します。",
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
