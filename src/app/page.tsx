@@ -447,11 +447,11 @@ export default async function LandingPage() {
       <footer className="bg-navy-700 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <Logo variant="default" size="sm" />
-          <p className="text-gray-500 text-xs">© 2026 CheckInn. All rights reserved.</p>
-          <div className="flex gap-6 text-xs text-gray-500">
-            <Link href="#" className="hover:text-gray-300 transition-colors">プライバシーポリシー</Link>
-            <Link href="#" className="hover:text-gray-300 transition-colors">利用規約</Link>
-            <Link href="#" className="hover:text-gray-300 transition-colors">お問い合わせ</Link>
+          <p className="text-navy-300 text-xs">© 2026 CheckInn / 株式会社ユナイテッドフューチャーズ</p>
+          <div className="flex gap-6 text-xs text-navy-300">
+            <Link href="/tokusho" className="hover:text-white transition-colors">特定商取引法に基づく表記</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">プライバシーポリシー</Link>
+            <a href="mailto:support@united-futures.com" className="hover:text-white transition-colors">お問い合わせ</a>
           </div>
         </div>
       </footer>
