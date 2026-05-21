@@ -10,7 +10,7 @@ export default async function RegisterPage({ params }: { params: Promise<{ qr_sl
 
   const { data: facility } = await supabase
     .from('facilities')
-    .select('id, name, address, form_config')
+    .select('id, name, address, form_config, max_guests')
     .eq('qr_slug', qr_slug)
     .single()
 
@@ -41,6 +41,7 @@ export default async function RegisterPage({ params }: { params: Promise<{ qr_sl
           qrSlug={qr_slug}
           facilityName={facility.name}
           formConfig={formConfig as Record<string, string>}
+          maxGuests={facility.max_guests ?? 10}
         />
 
       </div>

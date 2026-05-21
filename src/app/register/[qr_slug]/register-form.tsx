@@ -10,6 +10,7 @@ interface Props {
   qrSlug: string
   facilityName: string
   formConfig: Record<string, string>
+  maxGuests?: number
 }
 
 type Step = 'booking' | 'basic' | 'passport' | 'terms' | 'passkey' | 'done'
@@ -33,7 +34,7 @@ const TERMS_TEXT = `宿泊約款・ハウスルール
 施設内での事故・盗難については施設は責任を負いかねます。
 貴重品の管理はお客様ご自身でお願いします。`
 
-export function RegisterForm({ qrSlug, facilityName, formConfig }: Props) {
+export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 }: Props) {
   const cfg = (key: string): Level => (formConfig[key] as Level) ?? 'required'
   const show = (key: string) => cfg(key) !== 'off'
   const isRequired = (key: string) => cfg(key) === 'required'
@@ -265,10 +266,11 @@ export function RegisterForm({ qrSlug, facilityName, formConfig }: Props) {
                 value={bookingInfo.num_guests}
                 onChange={e => setBK('num_guests', parseInt(e.target.value))}
               >
-                {[1,2,3,4,5,6,7,8,9,10].map(n => (
+                {Array.from({ length: maxGuests }, (_, i) => i + 1).map(n => (
                   <option key={n} value={n}>{n}名</option>
                 ))}
               </select>
+              <p className="text-xs text-gray-400 mt-1">最大 {maxGuests}名まで</p>
             </div>
             <Button className="w-full" size="lg" disabled={!bookingValid()} onClick={nextStep}>
               次へ <ChevronRight size={16} className="ml-1" />

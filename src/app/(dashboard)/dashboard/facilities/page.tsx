@@ -79,9 +79,13 @@ export default async function FacilitiesPage() {
                     </div>
                   </div>
 
-                  {/* ③ フォーム項目設定 */}
+                  {/* ③ 施設設定（最大人数 + フォーム項目） */}
                   <div className="border-t border-gray-100 pt-3">
-                    <FormConfigEditor facilityId={f.id} currentConfig={formConfig} />
+                    <FormConfigEditor
+                      facilityId={f.id}
+                      currentConfig={formConfig}
+                      currentMaxGuests={f.max_guests ?? 10}
+                    />
                   </div>
 
                 </CardContent>
