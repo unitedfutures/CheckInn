@@ -8,7 +8,7 @@ export default async function SettingsPage() {
   const { data: { user } } = await supabase.auth.getUser()
   const { data: profile } = await supabase
     .from('profiles')
-    .select('*')
+    .select('company_name, beds24_api_key, airhost_api_key')
     .eq('id', user!.id)
     .single()
 
@@ -23,6 +23,7 @@ export default async function SettingsPage() {
         <SettingsForm
           defaultCompanyName={profile?.company_name ?? ''}
           defaultBeds24ApiKey={profile?.beds24_api_key ?? ''}
+          defaultAirhostApiKey={profile?.airhost_api_key ?? ''}
           email={user?.email ?? ''}
         />
 

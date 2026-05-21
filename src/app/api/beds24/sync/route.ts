@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { getBookings } from '@/lib/beds24/client'
-import { sendPreCheckinEmail } from '@/lib/brevo/emails'
 
 export async function POST(request: Request) {
   const supabase = await createClient()
@@ -46,7 +45,6 @@ export async function POST(request: Request) {
 
   let synced = 0
   let skipped = 0
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
   for (const b of beds24Bookings) {
     const { data: existing } = await supabase
@@ -60,33 +58,18 @@ export async function POST(request: Request) {
     const guestName = `${b.guestLastName} ${b.guestFirstName}`.trim()
     const numGuests = (b.numAdult || 0) + (b.numChild || 0)
 
-    const { data: newBooking } = await supabase
-      .from('bookings')
-      .insert({
-        facility_id,
-        user_id: user.id,
-        beds24_booking_id: b.bookId,
-        guest_email: b.guestEmail,
-        guest_name: guestName,
-        checkin_date: b.firstNight,
-        checkout_date: b.lastNight,
-        num_guests: numGuests || 1,
-        status: b.guestEmail ? 'pre_checkin_sent' : 'pending',
-      })
-      .select()
-      .single()
-
-    if (newBooking && b.guestEmail) {
-      await sendPreCheckinEmail({
-        to: b.guestEmail,
-        guestName,
-        token: newBooking.pre_checkin_token,
-        propertyName: facility.name,
-        checkinDate: b.firstNight,
-        checkoutDate: b.lastNight,
-        appUrl,
-      })
-    }
+    await supabase.from('bookings').insert({
+      facility_id,
+      user_id:          user.id,
+      beds24_booking_id: b.bookId,
+      ota_source:       'beds24',
+      guest_email:      b.guestEmail,
+      guest_name:       guestName,
+      checkin_date:     b.firstNight,
+      checkout_date:    b.lastNight,
+      num_guests:       numGuests || 1,
+      status:           'pending',
+    })
 
     synced++
   }

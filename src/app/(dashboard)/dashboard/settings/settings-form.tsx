@@ -9,13 +9,16 @@ import { Key, Mail, Eye, EyeOff, CheckCircle } from 'lucide-react'
 interface Props {
   defaultCompanyName: string
   defaultBeds24ApiKey: string
+  defaultAirhostApiKey: string
   email: string
 }
 
-export function SettingsForm({ defaultCompanyName, defaultBeds24ApiKey, email }: Props) {
+export function SettingsForm({ defaultCompanyName, defaultBeds24ApiKey, defaultAirhostApiKey, email }: Props) {
   const [companyName, setCompanyName] = useState(defaultCompanyName)
   const [beds24ApiKey, setBeds24ApiKey] = useState(defaultBeds24ApiKey)
+  const [airhostApiKey, setAirhostApiKey] = useState(defaultAirhostApiKey)
   const [showKey, setShowKey] = useState(false)
+  const [showAirhostKey, setShowAirhostKey] = useState(false)
   const [loading, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
@@ -27,7 +30,7 @@ export function SettingsForm({ defaultCompanyName, defaultBeds24ApiKey, email }:
     const res = await fetch('/api/settings', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ company_name: companyName, beds24_api_key: beds24ApiKey }),
+      body: JSON.stringify({ company_name: companyName, beds24_api_key: beds24ApiKey, airhost_api_key: airhostApiKey }),
     })
 
     if (res.ok) {
@@ -78,16 +81,36 @@ export function SettingsForm({ defaultCompanyName, defaultBeds24ApiKey, email }:
               value={beds24ApiKey}
               onChange={e => setBeds24ApiKey(e.target.value)}
             />
-            <button
-              type="button"
-              onClick={() => setShowKey(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
+            <button type="button" onClick={() => setShowKey(v => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
               {showKey ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
           <p className="text-xs text-gray-400 mt-1">
             Beds24管理画面 → Settings → Account → API Key から取得できます
+          </p>
+        </div>
+
+        {/* Airhost APIキー */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Airhost APIキー
+          </label>
+          <div className="relative">
+            <input
+              type={showAirhostKey ? 'text' : 'password'}
+              className="block w-full rounded-lg border border-gray-300 px-3 py-2 pr-10 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              placeholder="AirhostのAPIキーを入力"
+              value={airhostApiKey}
+              onChange={e => setAirhostApiKey(e.target.value)}
+            />
+            <button type="button" onClick={() => setShowAirhostKey(v => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              {showAirhostKey ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
+          <p className="text-xs text-gray-400 mt-1">
+            Airhost管理画面 → 設定 → API連携 からAPIキーを取得できます
           </p>
         </div>
 

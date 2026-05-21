@@ -7,11 +7,11 @@ export async function PUT(request: Request) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { company_name, beds24_api_key } = body
+  const { company_name, beds24_api_key, airhost_api_key } = body
 
   const { error } = await supabase
     .from('profiles')
-    .update({ company_name, beds24_api_key, updated_at: new Date().toISOString() })
+    .update({ company_name, beds24_api_key, airhost_api_key, updated_at: new Date().toISOString() })
     .eq('id', user.id)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })

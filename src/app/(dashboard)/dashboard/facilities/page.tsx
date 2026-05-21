@@ -6,6 +6,7 @@ import { FacilityForm } from './facility-form'
 import { FacilityQR } from './facility-qr'
 import { Beds24SyncButton } from './beds24-sync-button'
 import { Beds24ImportButton } from './beds24-import-button'
+import { AirhostSyncButton } from './airhost-sync-button'
 import { PreCheckinUrlDisplay } from './pre-checkin-url-generator'
 import { FormConfigEditor, DEFAULT_FORM_CONFIG } from './form-config-editor'
 import type { FormConfig } from './form-config-editor'
@@ -78,10 +79,17 @@ export default async function FacilitiesPage() {
                         <span>Beds24 ID: {f.beds24_property_id}</span>
                       </div>
                     )}
+                    {f.airhost_property_id && (
+                      <div className="flex items-center gap-2 text-xs text-purple-600 bg-purple-50 rounded-lg px-3 py-2">
+                        <RefreshCw size={13} />
+                        <span>Airhost ID: {f.airhost_property_id}</span>
+                      </div>
+                    )}
 
                     <div className="grid grid-cols-2 gap-2">
                       <FacilityQR facility={f} />
                       {f.beds24_property_id && <Beds24SyncButton facilityId={f.id} />}
+                      {f.airhost_property_id && <AirhostSyncButton facilityId={f.id} />}
                     </div>
                   </div>
 
