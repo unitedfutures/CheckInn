@@ -43,6 +43,12 @@ type FieldDef = {
 
 const SECTION_BOOKING: FieldDef[] = [
   {
+    key: 'num_guests',
+    label: '宿泊人数',
+    desc: '同伴者を含む宿泊人数',
+    levels: ['required', 'optional', 'off'],
+  },
+  {
     key: 'checkin_time',
     label: 'チェックイン時間',
     desc: '希望チェックイン時刻（例：15:00）',
@@ -97,12 +103,6 @@ const SECTION_BASIC: FieldDef[] = [
     key: 'nationality',
     label: '国籍',
     desc: '日本人含む全宿泊者の国籍（外国人はパスポートで自動設定）',
-    levels: ['required', 'optional', 'off'],
-  },
-  {
-    key: 'num_guests',
-    label: '宿泊人数',
-    desc: '同伴者を含む宿泊人数',
     levels: ['required', 'optional', 'off'],
   },
 ]
