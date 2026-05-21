@@ -6,7 +6,7 @@ import { FacilityForm } from './facility-form'
 import { FacilityQR } from './facility-qr'
 import { Beds24SyncButton } from './beds24-sync-button'
 import { Beds24ImportButton } from './beds24-import-button'
-import { PreCheckinUrlGenerator } from './pre-checkin-url-generator'
+import { PreCheckinUrlDisplay } from './pre-checkin-url-generator'
 import { FormConfigEditor, DEFAULT_FORM_CONFIG } from './form-config-editor'
 import type { FormConfig } from './form-config-editor'
 
@@ -55,8 +55,8 @@ export default async function FacilitiesPage() {
 
                 <CardContent className="space-y-3">
 
-                  {/* ① 事前登録URL発行（最上段・目立つ配置） */}
-                  <PreCheckinUrlGenerator facilityId={f.id} appUrl={appUrl} />
+                  {/* ① 事前登録URL（最上段・目立つ配置） */}
+                  <PreCheckinUrlDisplay qrSlug={f.qr_slug} appUrl={appUrl} />
 
                   {/* ② QRコード表示・Beds24 */}
                   <div className="border-t border-gray-100 pt-3 space-y-2">
