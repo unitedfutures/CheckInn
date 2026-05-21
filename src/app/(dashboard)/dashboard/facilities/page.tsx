@@ -60,8 +60,14 @@ export default async function FacilitiesPage() {
 
                   {/* ② QRコード表示・Beds24 */}
                   <div className="border-t border-gray-100 pt-3 space-y-2">
-                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">チェックインQR</p>
-                    <div className="flex items-center gap-2 text-xs text-gray-400 bg-gray-50 rounded-lg px-3 py-2">
+                    <div className="flex items-center gap-1.5">
+                      <QrCode size={13} className="text-indigo-500" />
+                      <p className="text-xs font-semibold text-indigo-700">チェックインQR（施設玄関に掲示）</p>
+                    </div>
+                    <p className="text-xs text-gray-400 leading-relaxed">
+                      印刷して施設玄関付近に貼ってください。ゲストがQRコードを読み込みチェックインを完了します。
+                    </p>
+                    <div className="flex items-center gap-2 text-xs text-gray-400 bg-indigo-50 border border-indigo-100 rounded-lg px-3 py-2">
                       <QrCode size={13} />
                       <span className="font-mono truncate">{f.qr_slug}</span>
                     </div>
