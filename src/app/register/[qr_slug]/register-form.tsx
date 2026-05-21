@@ -47,18 +47,24 @@ export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 
   // Step 1: 宿泊日程
   const today = new Date().toISOString().split('T')[0]
   const [bookingInfo, setBookingInfo] = useState({
-    checkin_date: '',
-    checkout_date: '',
-    num_guests: 1,
+    checkin_date:      '',
+    checkout_date:     '',
+    num_guests:        1,
+    checkin_time:      '',
+    checkout_time:     '',
+    previous_location: '',
+    next_destination:  '',
   })
 
   // Step 2: 基本情報
   const [basic, setBasic] = useState({
-    full_name: '',
-    email: '',
-    phone: '',
-    address: '',
-    is_foreign: false,
+    full_name:   '',
+    email:       '',
+    phone:       '',
+    address:     '',
+    age:         '',
+    nationality: '',
+    is_foreign:  false,
   })
 
   // 顔写真
@@ -92,9 +98,20 @@ export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 
 
   const basicValid = () => {
     if (!basic.full_name || !basic.email) return false
-    if (show('phone') && isRequired('phone') && !basic.phone) return false
-    if (show('address') && isRequired('address') && !basic.address) return false
-    if (show('face_photo') && isRequired('face_photo') && !faceFile) return false
+    if (show('phone')       && isRequired('phone')       && !basic.phone)       return false
+    if (show('address')     && isRequired('address')     && !basic.address)     return false
+    if (show('age')         && isRequired('age')         && !basic.age)         return false
+    if (show('nationality') && isRequired('nationality') && !basic.nationality) return false
+    if (show('face_photo')  && isRequired('face_photo')  && !faceFile)          return false
+    return true
+  }
+
+  const bookingInfoValid = () => {
+    if (!bookingValid()) return false
+    if (show('checkin_time')      && isRequired('checkin_time')      && !bookingInfo.checkin_time)      return false
+    if (show('checkout_time')     && isRequired('checkout_time')     && !bookingInfo.checkout_time)     return false
+    if (show('previous_location') && isRequired('previous_location') && !bookingInfo.previous_location) return false
+    if (show('next_destination')  && isRequired('next_destination')  && !bookingInfo.next_destination)  return false
     return true
   }
 
@@ -105,7 +122,10 @@ export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 
     const formData = new FormData()
     formData.append('qr_slug', qrSlug)
     formData.append('booking', JSON.stringify(bookingInfo))
-    formData.append('basic', JSON.stringify(basic))
+    formData.append('basic', JSON.stringify({
+      ...basic,
+      age: basic.age ? parseInt(basic.age) : null,
+    }))
     formData.append('passport', JSON.stringify(passport))
     if (passportFile) formData.append('passport_image', passportFile)
     if (faceFile) formData.append('face_photo', faceFile)
@@ -272,7 +292,54 @@ export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 
               </select>
               <p className="text-xs text-gray-400 mt-1">最大 {maxGuests}名まで</p>
             </div>
-            <Button className="w-full" size="lg" disabled={!bookingValid()} onClick={nextStep}>
+
+            {/* 追加フィールド：チェックイン・アウト時間 */}
+            {(show('checkin_time') || show('checkout_time')) && (
+              <div className="grid grid-cols-2 gap-3">
+                {show('checkin_time') && (
+                  <Input
+                    id="checkin_time" type="time"
+                    label={`チェックイン時間${isRequired('checkin_time') ? ' *' : '（任意）'}`}
+                    value={bookingInfo.checkin_time}
+                    onChange={e => setBK('checkin_time', e.target.value)}
+                    required={isRequired('checkin_time')}
+                  />
+                )}
+                {show('checkout_time') && (
+                  <Input
+                    id="checkout_time" type="time"
+                    label={`チェックアウト時間${isRequired('checkout_time') ? ' *' : '（任意）'}`}
+                    value={bookingInfo.checkout_time}
+                    onChange={e => setBK('checkout_time', e.target.value)}
+                    required={isRequired('checkout_time')}
+                  />
+                )}
+              </div>
+            )}
+
+            {show('previous_location') && (
+              <Input
+                id="previous_location"
+                label={`前出発地${isRequired('previous_location') ? ' *' : '（任意）'}`}
+                placeholder="例：東京"
+                value={bookingInfo.previous_location}
+                onChange={e => setBK('previous_location', e.target.value)}
+                required={isRequired('previous_location')}
+              />
+            )}
+
+            {show('next_destination') && (
+              <Input
+                id="next_destination"
+                label={`行き先地${isRequired('next_destination') ? ' *' : '（任意）'}`}
+                placeholder="例：大阪"
+                value={bookingInfo.next_destination}
+                onChange={e => setBK('next_destination', e.target.value)}
+                required={isRequired('next_destination')}
+              />
+            )}
+
+            <Button className="w-full" size="lg" disabled={!bookingInfoValid()} onClick={nextStep}>
               次へ <ChevronRight size={16} className="ml-1" />
             </Button>
           </div>
@@ -294,6 +361,22 @@ export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 
                 placeholder="090-0000-0000"
                 value={basic.phone} onChange={e => setB('phone', e.target.value)}
                 required={isRequired('phone')} />
+            )}
+
+            {show('age') && (
+              <Input id="age" type="number"
+                label={`年齢${isRequired('age') ? ' *' : '（任意）'}`}
+                placeholder="例：35"
+                value={basic.age} onChange={e => setB('age', e.target.value)}
+                required={isRequired('age')} />
+            )}
+
+            {show('nationality') && (
+              <Input id="nationality"
+                label={`国籍${isRequired('nationality') ? ' *' : '（任意）'}`}
+                placeholder="例：日本"
+                value={basic.nationality} onChange={e => setB('nationality', e.target.value)}
+                required={isRequired('nationality')} />
             )}
 
             {show('address') && (
