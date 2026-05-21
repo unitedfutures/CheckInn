@@ -11,7 +11,7 @@ export function FacilityForm() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
-    name: '', address: '', beds24_property_id: '',
+    name: '', address: '', beds24_property_id: '', airhost_property_id: '',
     remote_lock_device_id: '', emergency_contact: '', checkin_instructions: '',
   })
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }))
@@ -24,7 +24,7 @@ export function FacilityForm() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     })
-    if (res.ok) { setOpen(false); setForm({ name: '', address: '', beds24_property_id: '', remote_lock_device_id: '', emergency_contact: '', checkin_instructions: '' }); router.refresh() }
+    if (res.ok) { setOpen(false); setForm({ name: '', address: '', beds24_property_id: '', airhost_property_id: '', remote_lock_device_id: '', emergency_contact: '', checkin_instructions: '' }); router.refresh() }
     setLoading(false)
   }
 
@@ -45,6 +45,7 @@ export function FacilityForm() {
               <Input id="name" label="施設名 *" placeholder="例：コテージ八ヶ岳" value={form.name} onChange={e => set('name', e.target.value)} required />
               <Input id="address" label="住所" placeholder="長野県諏訪郡原村〇〇" value={form.address} onChange={e => set('address', e.target.value)} />
               <Input id="beds24_property_id" label="Beds24 Property ID" placeholder="例：12345" value={form.beds24_property_id} onChange={e => set('beds24_property_id', e.target.value)} />
+              <Input id="airhost_property_id" label="Airhost Property ID" placeholder="例：prop_xxxx" value={form.airhost_property_id} onChange={e => set('airhost_property_id', e.target.value)} />
               <Input id="remote_lock_device_id" label="RemoteLOCK Device ID" placeholder="例：device_xxxx" value={form.remote_lock_device_id} onChange={e => set('remote_lock_device_id', e.target.value)} />
               <Input id="emergency_contact" label="緊急連絡先" placeholder="例：090-0000-0000（管理人）" value={form.emergency_contact} onChange={e => set('emergency_contact', e.target.value)} />
               <div>

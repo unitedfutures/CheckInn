@@ -7,13 +7,13 @@ export async function POST(request: Request) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { name, address, beds24_property_id, remote_lock_device_id, emergency_contact, checkin_instructions } = body
+  const { name, address, beds24_property_id, airhost_property_id, remote_lock_device_id, emergency_contact, checkin_instructions } = body
 
   if (!name) return NextResponse.json({ error: '施設名は必須です' }, { status: 400 })
 
   const { data, error } = await supabase
     .from('facilities')
-    .insert({ user_id: user.id, name, address, beds24_property_id, remote_lock_device_id, emergency_contact, checkin_instructions })
+    .insert({ user_id: user.id, name, address, beds24_property_id, airhost_property_id, remote_lock_device_id, emergency_contact, checkin_instructions })
     .select()
     .single()
 
