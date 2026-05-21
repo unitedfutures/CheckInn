@@ -116,7 +116,7 @@ export default function PrivacyPage() {
             <p className="mb-4">当社は、サービス提供のために以下の第三者サービスを利用しています。各社のプライバシーポリシーをご確認ください。</p>
             <Table rows={[
               ['Supabase, Inc.', 'データベース・ストレージ・認証', 'https://supabase.com/privacy'],
-              ['Resend, Inc.', 'メール配信', 'https://resend.com/privacy'],
+              ['Brevo (Sendinblue)', 'メール配信', 'https://www.brevo.com/legal/privacypolicy/'],
               ['Vercel, Inc.', 'アプリケーションホスティング', 'https://vercel.com/legal/privacy-policy'],
               ['Beds24', '予約管理システム連携（利用施設のみ）', 'https://beds24.com/privacy'],
             ]} headers={['サービス', '利用目的', 'プライバシーポリシー']} />

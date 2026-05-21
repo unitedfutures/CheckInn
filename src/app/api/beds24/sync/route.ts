@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { getBookings } from '@/lib/beds24/client'
-import { sendPreCheckinEmail } from '@/lib/resend/emails'
+import { sendPreCheckinEmail } from '@/lib/brevo/emails'
 
 export async function POST(request: Request) {
   const supabase = await createClient()

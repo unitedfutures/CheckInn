@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
-import { sendPreCheckinEmail } from '@/lib/resend/emails'
+import { sendPreCheckinEmail } from '@/lib/brevo/emails'
 
 export async function GET(request: Request) {
   const supabase = await createClient()

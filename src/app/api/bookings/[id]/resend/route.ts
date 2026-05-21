@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
-import { sendPreCheckinEmail } from '@/lib/resend/emails'
+import { sendPreCheckinEmail } from '@/lib/brevo/emails'
 
 export async function POST(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

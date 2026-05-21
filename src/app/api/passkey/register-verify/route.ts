@@ -3,7 +3,7 @@ import { verifyRegistrationResponse } from '@simplewebauthn/server'
 import type { RegistrationResponseJSON } from '@simplewebauthn/server'
 import { createClient } from '@supabase/supabase-js'
 import { getRpID, getOrigin } from '@/lib/passkey/config'
-import { sendCheckinQrEmail } from '@/lib/resend/emails'
+import { sendCheckinQrEmail } from '@/lib/brevo/emails'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
