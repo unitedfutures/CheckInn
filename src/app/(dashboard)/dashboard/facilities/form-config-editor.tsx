@@ -3,10 +3,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Settings2, Save, CheckCircle, Users, CalendarDays, User } from 'lucide-react'
+import { Settings2, Save, CheckCircle, Users, CalendarDays, User, Fingerprint } from 'lucide-react'
 
 export type FieldLevel = 'required' | 'optional' | 'off'
 export type FormConfig = {
+  // パスキー
+  passkey:           'required' | 'optional'
   // 基本情報
   face_photo:        FieldLevel
   address:           FieldLevel
@@ -22,6 +24,7 @@ export type FormConfig = {
 }
 
 export const DEFAULT_FORM_CONFIG: FormConfig = {
+  passkey:           'required',
   face_photo:        'optional',
   address:           'required',
   phone:             'required',
@@ -115,7 +118,7 @@ const LEVEL_LABEL: Record<FieldLevel, string> = {
 const LEVEL_ACTIVE: Record<FieldLevel, string> = {
   required: 'bg-indigo-100 text-indigo-700 font-semibold',
   optional: 'bg-amber-100 text-amber-700 font-semibold',
-  off:      'bg-gray-100 text-gray-400',
+  off:      'bg-gray-500 text-white font-semibold',
 }
 
 function FieldRow({
@@ -214,6 +217,36 @@ export function FormConfigEditor({ facilityId, currentConfig, currentMaxGuests =
               <span className="w-16 text-center text-sm font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-lg px-2 py-1">
                 {maxGuests}名
               </span>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-100" />
+
+          {/* ── パスキー認証 ── */}
+          <div>
+            <div className="flex items-center gap-1.5 mb-2">
+              <Fingerprint size={13} className="text-indigo-500" />
+              <p className="text-sm font-semibold text-gray-800">パスキー認証（チェックイン時の生体認証）</p>
+            </div>
+            <p className="text-xs text-gray-400 mb-3">
+              「任意」にするとゲストがパスキー登録をスキップできます。スキップした場合はメールのリンクのみでチェックインします。
+            </p>
+            <div className="flex gap-1">
+              {(['required', 'optional'] as const).map(level => (
+                <button
+                  key={level}
+                  onClick={() => setConfig(c => ({ ...c, passkey: level }))}
+                  className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
+                    config.passkey === level
+                      ? level === 'required'
+                        ? 'bg-indigo-100 text-indigo-700 font-semibold'
+                        : 'bg-amber-100 text-amber-700 font-semibold'
+                      : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                  }`}
+                >
+                  {level === 'required' ? '必須' : '任意（スキップ可）'}
+                </button>
+              ))}
             </div>
           </div>
 

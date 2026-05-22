@@ -204,6 +204,7 @@ export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 
 
   // ─── パスキー登録画面 ──────────────────────────────────────────────
   if (step === 'passkey') {
+    const passkeyOptional = formConfig['passkey'] === 'optional'
     return (
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6 text-center space-y-5">
@@ -221,6 +222,14 @@ export function RegisterForm({ qrSlug, facilityName, formConfig, maxGuests = 10 
           <Button className="w-full" size="lg" loading={loading} onClick={handlePasskeyRegister}>
             Face ID / 指紋でパスキーを登録
           </Button>
+          {passkeyOptional && (
+            <button
+              onClick={() => setStep('done')}
+              className="text-xs text-gray-400 hover:text-gray-600 underline underline-offset-2"
+            >
+              スキップして登録を完了する
+            </button>
+          )}
         </div>
       </div>
     )
