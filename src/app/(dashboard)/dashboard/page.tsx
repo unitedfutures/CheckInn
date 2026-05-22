@@ -72,6 +72,7 @@ export default async function DashboardPage() {
         <div className="flex items-center gap-2 text-sm text-navy-600 flex-wrap">
           <div className="bg-white border border-navy-200 rounded-lg px-3 py-1.5">
             <span className="text-navy-300 text-xs mr-1">①</span>事前登録URLをゲストに送付
+            <p className="text-xs text-gray-400 mt-0.5">自動送信メールでのご案内を推奨</p>
           </div>
           <ArrowRight size={14} className="text-navy-300 shrink-0" />
           <div className="bg-white border border-navy-200 rounded-lg px-3 py-1.5">
