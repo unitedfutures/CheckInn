@@ -61,7 +61,7 @@ export default async function DashboardPage() {
           </Link>
           <span className="text-gray-300">／</span>
           <Link href="/dashboard/settings" className="bg-white border border-gray-300 rounded-lg px-3 py-1 hover:border-navy-400 hover:text-navy-500 transition-colors">
-            Beds24連携を設定（任意）
+            Beds24 / Airhost 連携を設定（予約照合用・任意）
           </Link>
         </div>
       </div>

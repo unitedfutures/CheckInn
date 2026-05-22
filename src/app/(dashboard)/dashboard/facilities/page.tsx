@@ -25,7 +25,7 @@ export default async function FacilitiesPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">施設管理</h2>
-          <p className="text-gray-500 text-sm mt-1">施設の登録・事前登録URL発行・QRコード・Beds24連携</p>
+          <p className="text-gray-500 text-sm mt-1">施設の登録・事前登録URL発行・QRコード・OTA連携（Beds24 / Airhost）</p>
         </div>
         <div className="flex items-start gap-3">
           <Beds24ImportButton />
@@ -73,16 +73,23 @@ export default async function FacilitiesPage() {
                       <span className="font-mono truncate">{f.qr_slug}</span>
                     </div>
 
-                    {f.beds24_property_id && (
-                      <div className="flex items-center gap-2 text-xs text-blue-600 bg-blue-50 rounded-lg px-3 py-2">
-                        <RefreshCw size={13} />
-                        <span>Beds24 ID: {f.beds24_property_id}</span>
-                      </div>
-                    )}
-                    {f.airhost_property_id && (
-                      <div className="flex items-center gap-2 text-xs text-purple-600 bg-purple-50 rounded-lg px-3 py-2">
-                        <RefreshCw size={13} />
-                        <span>Airhost ID: {f.airhost_property_id}</span>
+                    {(f.beds24_property_id || f.airhost_property_id) && (
+                      <div className="space-y-1.5">
+                        <p className="text-xs text-gray-400">
+                          予約情報の照合に使用します。ゲストの事前登録情報と突合し、未登録・不一致をアラートします。
+                        </p>
+                        {f.beds24_property_id && (
+                          <div className="flex items-center gap-2 text-xs text-blue-600 bg-blue-50 rounded-lg px-3 py-2">
+                            <RefreshCw size={13} />
+                            <span>Beds24 ID: {f.beds24_property_id}</span>
+                          </div>
+                        )}
+                        {f.airhost_property_id && (
+                          <div className="flex items-center gap-2 text-xs text-purple-600 bg-purple-50 rounded-lg px-3 py-2">
+                            <RefreshCw size={13} />
+                            <span>Airhost ID: {f.airhost_property_id}</span>
+                          </div>
+                        )}
                       </div>
                     )}
 
@@ -111,7 +118,7 @@ export default async function FacilitiesPage() {
         <div className="text-center py-16 text-gray-400">
           <Building2 size={48} className="mx-auto mb-4 opacity-30" />
           <p className="text-sm">施設が登録されていません</p>
-          <p className="text-xs mt-1">「Beds24から施設をインポート」または「施設を追加」から登録してください</p>
+          <p className="text-xs mt-1">「施設を追加」ボタンから登録してください（Beds24連携の場合はインポートも可）</p>
         </div>
       )}
     </div>
